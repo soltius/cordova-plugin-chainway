@@ -1,0 +1,23 @@
+{
+  "name": "cordova-plugin-uhf",
+  "version": "1.2.1",
+  "description": "Cordova UHF Inventory Plugin",
+  "cordova": {
+    "id": "cordova-plugin-uhf",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://code.essocloud.com/dependencies/cordova-plugin-uhf.git"
+  },
+  "keywords": [
+    "cordova",
+    "uhf",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "jingyangli",
+  "license": "Apache 2.0"
+}
