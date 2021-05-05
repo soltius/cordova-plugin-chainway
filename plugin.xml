@@ -20,12 +20,12 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:rim="http://www.blackberry.com/ns/widgets" 
-    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-uhf" version="1.1.0">
+    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-chainway" version="1.1.0">
     <name>UHF</name>
     <description>Cordova UHF Inventory Plugin</description>
     <license>Apache 2.0</license>
     <keywords>cordova,uhf</keywords>
-    <repo>http://code.essocloud.com/dependencies/cordova-plugin-uhf.git</repo>
+    <repo>https://github.com/soltius/cordova-plugin-chainway.git</repo>
 
     <js-module src="www/uhf.js" name="uhf">
         <clobbers target="uhf"/>
