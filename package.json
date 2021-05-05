@@ -1,16 +1,16 @@
 {
-  "name": "cordova-plugin-uhf",
+  "name": "cordova-plugin-chainway",
   "version": "1.2.1",
   "description": "Cordova UHF Inventory Plugin",
   "cordova": {
-    "id": "cordova-plugin-uhf",
+    "id": "cordova-plugin-chainway",
     "platforms": [
       "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "http://code.essocloud.com/dependencies/cordova-plugin-uhf.git"
+    "url": "https://github.com/soltius/cordova-plugin-chainway.git"
   },
   "keywords": [
     "cordova",
