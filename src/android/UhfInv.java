@@ -63,9 +63,6 @@ public class UhfInv extends CordovaPlugin {
   public static String platform; // Device OS
   public static String uuid; // Device UUID
 
-  // private CallbackContext keyup_callback = null;
-  // private CallbackContext keydown_callback = null;
-  // private CallbackContext allkeys_callback = null;
   // private View currentView = null;
 
   /**
