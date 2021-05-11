@@ -23,41 +23,26 @@ class BarcodeDataReceiver extends BroadcastReceiver {
   public BarcodeDataReceiver(CordovaInterface cordova, CallbackContext callbackContext) {
     this.cordova = cordova;
     this.callbackContext = callbackContext;
-//    PluginResult pluginResult = new PluginResult(Status.OK, "BarcodeDataReceiver constructor: Keep the Cordova callbackContext");
-//    pluginResult.setKeepCallback(true);   
-//    this.callbackContext.sendPluginResult(pluginResult);
   }
 
   @Override
   public void onReceive(Context context, Intent intent) {
+
     String barCode = intent.getStringExtra("data");
     if (barCode != null && !barCode.equals("")) {
+      PluginResult pluginResult = new PluginResult(Status.OK, barCode);
+      pluginResult.setKeepCallback(true);
+      this.callbackContext.sendPluginResult(pluginResult);
     } else {
-      barCode="Scan fail";
+      PluginResult pluginResult = new PluginResult(Status.ERROR, "Scan returned no results");
+      pluginResult.setKeepCallback(true);
+      this.callbackContext.sendPluginResult(pluginResult);
     }
-    //if(iBarcodeResult!=null)
-    //    iBarcodeResult.getBarcode(barCode);
-    //SoundManage.PlaySound(context, SoundManage.SoundType.SUCCESS);
-    toastMessage("Barcode: " + barCode);
-
-    PluginResult pluginResult = new PluginResult(Status.OK, "Barcode: " + barCode);
-    pluginResult.setKeepCallback(true);   
-    this.callbackContext.sendPluginResult(pluginResult);
-   
-//    this.callbackContext.success(barCode);
   }
   
   // --------------------------------------------------------------------------
   // LOCAL METHODS
   // --------------------------------------------------------------------------
-
-  private void toastMessage(final String msg) {
-    cordova.getActivity().runOnUiThread(new Runnable() {
-      public void run() {
-        Toast.makeText(cordova.getActivity(), msg, Toast.LENGTH_SHORT).show();
-      }
-    });
-  }
   
 }
 
