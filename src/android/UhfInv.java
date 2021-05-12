@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.UnsupportedEncodingException;
 import android.provider.Settings;
-import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -97,13 +96,11 @@ public class UhfInv extends CordovaPlugin {
    * @param webView The CordovaWebView Cordova is running in.
    */
   public void initialize(CordovaInterface cordova, CordovaWebView webView, final CallbackContext callbackContext) {
-    super.initialize(cordova, webView);
-    toastMessage("initialize()");    
+    super.initialize(cordova, webView); 
   }
 
   public void pluginInitialize() {
-    super.pluginInitialize();
-    toastMessage("pluginInitialize()");    
+    super.pluginInitialize();  
   }
 
   /**
@@ -133,15 +130,7 @@ public class UhfInv extends CordovaPlugin {
       if ("deviceInfo".equals(action)) {
         final String msg = "UhfInv.action.equals(\"deviceInfo\")";
         cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            // toastMessage(msg);
-            toastMessage("MODEL: " + android.os.Build.MODEL);
-            toastMessage("SERIAL: " + android.os.Build.SERIAL);
-            toastMessage("PRODUCT: " + android.os.Build.PRODUCT);
-            toastMessage("MANUFACTURER: " + android.os.Build.MANUFACTURER);
-            toastMessage("HARDWARE: " + android.os.Build.HARDWARE);
-            toastMessage("FINGERPRINT: " + android.os.Build.FINGERPRINT);
-            
+          public void run() {            
           callback(Status.OK, 
               "\nMODEL: " + android.os.Build.MODEL
             + "\nSERIAL: " + android.os.Build.SERIAL
@@ -149,31 +138,6 @@ public class UhfInv extends CordovaPlugin {
             + "\nMANUFACTURER: " + android.os.Build.MANUFACTURER
             + "\nHARDWARE: " + android.os.Build.HARDWARE
             + "\nFINGERPRINT: " + android.os.Build.FINGERPRINT);
-            
-            // Chainway C72
-            // "C72"
-            // "HC720C180800007"
-            // "c72c"
-            // "wtk"
-            // "mt6735"
-            // "wtk/c72c/c72:6.0/MRA58K/1526604563:user/release-keys"
-
-            // Chainway Ura8
-            // "A8"
-            // "a9ffd39a"
-            // "N1"
-            // "JSR"
-            // "qcom"
-            // "JSR/N1/N1:5.1.1/LMY47V/liuqifeng09261747:user/release-keys"
-
-            // RodinBell Orca 50
-            // "common"
-            // "GB8ZA9UMK4"
-            // "industrial"
-            // "rockchip"
-            // "rk30board"
-            // "Android/rk3288:6.0.1/MXC89K/root09100641:userdebug/test-keys"
-
             callback(Status.OK, msg);
           }
         });
@@ -286,16 +250,6 @@ public class UhfInv extends CordovaPlugin {
   // LOCAL METHODS
   // --------------------------------------------------------------------------
 
- 
-  private void toastMessage(final String msg) {
-    cordova.getActivity().runOnUiThread(new Runnable() {
-      public void run() {
-        Toast.makeText(cordova.getActivity(), "toastMessage(): " + msg, Toast.LENGTH_SHORT).show();
-      }
-    });
-   }
-
-
   private void startBarcodeDataReceiver() {
     try {
       if (this.receiver == null) {
@@ -308,9 +262,6 @@ public class UhfInv extends CordovaPlugin {
       callback(Status.ERROR, e.getMessage());
     }
   }
-
-
-  // way(0:all methods, 1:barcode, 2:two-dimensional code)
   
   private void Barcode2DWithSoftOpen(int way) {
     
@@ -318,26 +269,12 @@ public class UhfInv extends CordovaPlugin {
       barcode2DWS.stopScan();
       barcode2DWS.close();
     } catch (Exception e) {
-//    nothing to do      
+
     }
      
     try {
       if (barcode2DWS.open(cordova.getActivity())) {
         barcode2DWS.stopScan();
-
-        // barcode2DWS.setParameter(6, 1);
-        // barcode2DWS.setParameter(22, 0);
-        // barcode2DWS.setParameter(23, 55);
-        // barcode2DWS.setParameter(8, 1);  // CODE128
-        // barcode2DWS.setParameter(209, 0);
-        // barcode2DWS.setParameter(210, 55);
-        // barcode2DWS.setParameter(300, 1);  // IMG_AIM_SNAPSHOT
-        // barcode2DWS.setParameter(306, 1);  // IMG_AIM_MODE
-        // barcode2DWS.setParameter(324, 0);  // IMG_VIDEOVF
-        // barcode2DWS.setParameter(361, 1);  // IMG_IMAGE_ILLUM
-        // barcode2DWS.setParameter(402, 1);  // PICKLIST_MODE
-        // barcode2DWS.setParameter(293, 0);  // QRCODE
-        
         if (way == 1) { 
           barcode2DWS.setParameter(293, 0);
         }
@@ -345,8 +282,6 @@ public class UhfInv extends CordovaPlugin {
           barcode2DWS.disableAllCodeTypes();
           barcode2DWS.setParameter(293, 1);
         }
-        
-//        barcode2DWS.setScanCallback(ScanBack);
         callback(Status.OK, "Barcode Reader opened");
       } else {
         callback(Status.ERROR, "barcode2DWS.open() return false");
