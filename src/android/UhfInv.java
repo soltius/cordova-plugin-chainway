@@ -151,7 +151,8 @@ public class UhfInv extends CordovaPlugin {
        || "C72".equals(android.os.Build.MODEL) 
        || "P810".equals(android.os.Build.MODEL) 
        || "C76".equals(android.os.Build.MODEL) 
-       || "P820".equals(android.os.Build.MODEL)) {
+       || "P820".equals(android.os.Build.MODEL)
+       || "P80".equals(android.os.Build.MODEL)){
           
         if ("startBarcodeDataReceiver".equals(action)) {
           cordova.getThreadPool().execute(new Runnable() {

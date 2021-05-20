@@ -29,8 +29,9 @@ class BarcodeDataReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
 
     String barCode = intent.getStringExtra("data");
+    byte[] dataMatrix = intent.getByteArrayExtra("dataBytes");
     if (barCode != null && !barCode.equals("")) {
-      PluginResult pluginResult = new PluginResult(Status.OK, barCode);
+      PluginResult pluginResult = new PluginResult(Status.OK, dataMatrix);
       pluginResult.setKeepCallback(true);
       this.callbackContext.sendPluginResult(pluginResult);
     } else {
