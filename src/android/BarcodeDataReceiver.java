@@ -27,6 +27,7 @@ class BarcodeDataReceiver extends BroadcastReceiver {
       PluginResult pluginResult = new PluginResult(Status.OK, dataMatrix);
       pluginResult.setKeepCallback(true);
       this.callbackContext.sendPluginResult(pluginResult);
+      SoundManage.PlaySound(context, SoundManage.SoundType.SUCCESS);
     } else {
       PluginResult pluginResult = new PluginResult(Status.ERROR, "Scan returned no results");
       pluginResult.setKeepCallback(true);
