@@ -26,22 +26,7 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.TimeZone;
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.io.UnsupportedEncodingException;
-import android.provider.Settings;
-import android.view.View;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.app.Activity;
-import android.view.*;
 
 // import com.rscja.deviceapi.Barcode1D;
 import com.zebra.adc.decoder.Barcode2DWithSoft;
@@ -90,19 +75,11 @@ public class UhfInv extends CordovaPlugin {
   public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext)
           throws JSONException {
 
-      this.cordovaCallbackContext = callbackContext;
+    this.cordovaCallbackContext = callbackContext;
 
     try {
 
-      if ("C66".equals(android.os.Build.MODEL)
-              || "P700".equals(android.os.Build.MODEL)
-              || "C71".equals(android.os.Build.MODEL)
-              || "P800".equals(android.os.Build.MODEL)
-              || "C72".equals(android.os.Build.MODEL)
-              || "P810".equals(android.os.Build.MODEL)
-              || "C76".equals(android.os.Build.MODEL)
-              || "P820".equals(android.os.Build.MODEL)
-              || "P80".equals(android.os.Build.MODEL)){
+      if ("C66".equals(android.os.Build.MODEL) || "P80".equals(android.os.Build.MODEL)){
 
         if ("startBarcodeDataReceiver".equals(action)) {
 
