@@ -2,23 +2,17 @@ package com.pactera.hifm.uhf;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
-
-import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
-import android.view.KeyEvent;
-import android.widget.Toast;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+
 
 class BarcodeDataReceiver extends BroadcastReceiver {
 
-  CordovaInterface cordova;
-  CallbackContext callbackContext;
+  private CordovaInterface cordova;
+  private CallbackContext callbackContext;
 
   public BarcodeDataReceiver(CordovaInterface cordova, CallbackContext callbackContext) {
     this.cordova = cordova;
@@ -28,9 +22,8 @@ class BarcodeDataReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
 
-    String barCode = intent.getStringExtra("data");
     byte[] dataMatrix = intent.getByteArrayExtra("dataBytes");
-    if (barCode != null && !barCode.equals("")) {
+    if (dataMatrix != null) {
       PluginResult pluginResult = new PluginResult(Status.OK, dataMatrix);
       pluginResult.setKeepCallback(true);
       this.callbackContext.sendPluginResult(pluginResult);
@@ -39,6 +32,7 @@ class BarcodeDataReceiver extends BroadcastReceiver {
       pluginResult.setKeepCallback(true);
       this.callbackContext.sendPluginResult(pluginResult);
     }
+
   }
   
   // --------------------------------------------------------------------------

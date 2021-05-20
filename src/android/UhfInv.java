@@ -48,45 +48,20 @@ import com.zebra.adc.decoder.Barcode2DWithSoft;
 
 public class UhfInv extends CordovaPlugin {
 
-  Barcode2DWithSoft barcode2DWS;
-  private CallbackContext cordovaCallbackContext = null;
-  BarcodeDataReceiver receiver;
-  private String cwBarcode;
+  private Barcode2DWithSoft barcode2DWS;
+  private CallbackContext cordovaCallbackContext;
+  private BarcodeDataReceiver receiver;
 
   /**
    * Constructor.
    */
   public UhfInv() {
   }
-  
+
   public void callback(org.apache.cordova.PluginResult.Status status, String msg) {
     PluginResult pluginResult = new PluginResult(status, msg);
-    pluginResult.setKeepCallback(true);   
     this.cordovaCallbackContext.sendPluginResult(pluginResult);
   }
-  
-  public Barcode2DWithSoft.ScanCallback ScanBack = new Barcode2DWithSoft.ScanCallback() {
-    @Override
-    public void onScanComplete(int i, int length, byte[] bytes) {
-      if (length < 1) {
-        if (length == -1) {
-          callback(Status.ERROR, "ScanBack: Scan cancel");
-        } else if (length == 0) {
-          callback(Status.ERROR, "ScanBack: Scan Timeout");
-        } else {
-          callback(Status.ERROR, "ScanBack: Scan fail");
-        }
-      } else {
-        try {
-          cwBarcode = new String(bytes, 0, length, "ASCII");
-          callback(Status.OK, "ScanBack: " + cwBarcode);
-        } catch (UnsupportedEncodingException ex) {
-          callback(Status.ERROR, "ScanBack: UnsupportedEncodingException ex: " + ex);
-        }
-
-      }
-    }
-  };
 
   /**
    * Sets the context of the Command. This can then be used to do things like get
@@ -96,11 +71,11 @@ public class UhfInv extends CordovaPlugin {
    * @param webView The CordovaWebView Cordova is running in.
    */
   public void initialize(CordovaInterface cordova, CordovaWebView webView, final CallbackContext callbackContext) {
-    super.initialize(cordova, webView); 
+    super.initialize(cordova, webView);
   }
 
   public void pluginInitialize() {
-    super.pluginInitialize();  
+    super.pluginInitialize();
   }
 
   /**
@@ -113,58 +88,30 @@ public class UhfInv extends CordovaPlugin {
    * @return True if the action was valid, false if not.
    */
   public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext)
-      throws JSONException {
-        
-    if (this.cordovaCallbackContext == null) {
-      this.cordovaCallbackContext = callbackContext;        
-      callback(Status.OK, "cordovaCallbackContext instantiated");
-    }
-    
+          throws JSONException {
+
+      this.cordovaCallbackContext = callbackContext;
+
     try {
 
-      if ("test".equals(action)) {
-        callback(Status.OK, "callbackContext.success: new test method successful");
-        return true;
-      }
-        
-      if ("deviceInfo".equals(action)) {
-        final String msg = "UhfInv.action.equals(\"deviceInfo\")";
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {            
-          callback(Status.OK, 
-              "\nMODEL: " + android.os.Build.MODEL
-            + "\nSERIAL: " + android.os.Build.SERIAL
-            + "\nPRODUCT: " + android.os.Build.PRODUCT
-            + "\nMANUFACTURER: " + android.os.Build.MANUFACTURER
-            + "\nHARDWARE: " + android.os.Build.HARDWARE
-            + "\nFINGERPRINT: " + android.os.Build.FINGERPRINT);
-            callback(Status.OK, msg);
-          }
-        });
-        return true;
-      }
-     
-      if ("C66".equals(android.os.Build.MODEL) 
-       || "P700".equals(android.os.Build.MODEL) 
-       || "C71".equals(android.os.Build.MODEL) 
-       || "P800".equals(android.os.Build.MODEL)
-       || "C72".equals(android.os.Build.MODEL) 
-       || "P810".equals(android.os.Build.MODEL) 
-       || "C76".equals(android.os.Build.MODEL) 
-       || "P820".equals(android.os.Build.MODEL)
-       || "P80".equals(android.os.Build.MODEL)){
-          
+      if ("C66".equals(android.os.Build.MODEL)
+              || "P700".equals(android.os.Build.MODEL)
+              || "C71".equals(android.os.Build.MODEL)
+              || "P800".equals(android.os.Build.MODEL)
+              || "C72".equals(android.os.Build.MODEL)
+              || "P810".equals(android.os.Build.MODEL)
+              || "C76".equals(android.os.Build.MODEL)
+              || "P820".equals(android.os.Build.MODEL)
+              || "P80".equals(android.os.Build.MODEL)){
+
         if ("startBarcodeDataReceiver".equals(action)) {
-          cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
-              startBarcodeDataReceiver();
-            }
-          });
+
+          startBarcodeDataReceiver();
           return true;
         }
-        
+
         if (action.contains("Barcode2DWithSoft")) {
-          
+
           if ("Barcode2DWithSoftOpen".equals(action)) {
             if (null != barcode2DWS) {
               callback(Status.ERROR, "Failure: barcode2DWS is NOT null!");
@@ -179,7 +126,7 @@ public class UhfInv extends CordovaPlugin {
               });
               return true;
             }
-            
+
           } else if ("Barcode2DWithSoftClose".equals(action)) {
             if (null == barcode2DWS) {
               callback(Status.ERROR, "Failure: barcode2DWS is null already!");
@@ -204,7 +151,7 @@ public class UhfInv extends CordovaPlugin {
             }
 
             if (barcode2DWS.isPowerOn()) {
-              
+
               if ("Barcode2DWithSoftScan".equals(action)) {
                 cordova.getThreadPool().execute(new Runnable() {
                   public void run() {
@@ -212,7 +159,7 @@ public class UhfInv extends CordovaPlugin {
                   }
                 });
                 return true;
-                
+
               } else if ("Barcode2DWithSoftStopScan".equals(action)) {
                 cordova.getThreadPool().execute(new Runnable() {
                   public void run() {
@@ -220,7 +167,7 @@ public class UhfInv extends CordovaPlugin {
                   }
                 });
                 return true;
-                
+
               } else {
                 callback(Status.ERROR, "Invalid action");
                 return false;
@@ -257,29 +204,31 @@ public class UhfInv extends CordovaPlugin {
         this.receiver = new BarcodeDataReceiver(cordova, cordovaCallbackContext);
       }
       webView.getContext().registerReceiver(receiver, new IntentFilter("com.scanner.broadcast"));
-      callback(Status.OK, "Barcode Data Receiver started");
-      
+      PluginResult pluginResult = new PluginResult(Status.OK, "Receiver started");
+      pluginResult.setKeepCallback(true);
+      this.cordovaCallbackContext.sendPluginResult(pluginResult);
+
     } catch (Exception e) {
       callback(Status.ERROR, e.getMessage());
     }
   }
-  
+
   private void Barcode2DWithSoftOpen(int way) {
-    
+
     try {
       barcode2DWS.stopScan();
       barcode2DWS.close();
     } catch (Exception e) {
 
     }
-     
+
     try {
       if (barcode2DWS.open(cordova.getActivity())) {
         barcode2DWS.stopScan();
-        if (way == 1) { 
+        if (way == 1) {
           barcode2DWS.setParameter(293, 0);
         }
-        if (way == 2) { 
+        if (way == 2) {
           barcode2DWS.disableAllCodeTypes();
           barcode2DWS.setParameter(293, 1);
         }
@@ -294,7 +243,6 @@ public class UhfInv extends CordovaPlugin {
 
   private void Barcode2DWithSoftScan() {
     try {
-      cwBarcode = null;
       barcode2DWS.scan();
     } catch (Exception e) {
       callback(Status.ERROR, e.getMessage());
@@ -304,7 +252,6 @@ public class UhfInv extends CordovaPlugin {
   private void Barcode2DWithSoftStopScan() {
     try {
       barcode2DWS.stopScan();
-      cwBarcode = null;
       callback(Status.OK, "barcode2DWS.stopScan() success");
     } catch (Exception e) {
       callback(Status.ERROR, e.getMessage());
@@ -321,7 +268,6 @@ public class UhfInv extends CordovaPlugin {
 
   private void Barcode2DWithSoftClose() {
     try {
-      cwBarcode = null;
       barcode2DWS.stopScan();
       if (barcode2DWS.close()) {
         barcode2DWS = null;
