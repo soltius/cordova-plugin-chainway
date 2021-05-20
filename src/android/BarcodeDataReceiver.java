@@ -24,10 +24,10 @@ class BarcodeDataReceiver extends BroadcastReceiver {
 
     byte[] dataMatrix = intent.getByteArrayExtra("dataBytes");
     if (dataMatrix != null) {
+      SoundManage.PlaySound(context, SoundManage.SoundType.SUCCESS);
       PluginResult pluginResult = new PluginResult(Status.OK, dataMatrix);
       pluginResult.setKeepCallback(true);
       this.callbackContext.sendPluginResult(pluginResult);
-      SoundManage.PlaySound(context, SoundManage.SoundType.SUCCESS);
     } else {
       PluginResult pluginResult = new PluginResult(Status.ERROR, "Scan returned no results");
       pluginResult.setKeepCallback(true);
