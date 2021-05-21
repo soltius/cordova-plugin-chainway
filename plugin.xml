@@ -129,8 +129,8 @@
         <source-file src="src/android/libs/rbLibs/jniLibs/armeabi-v7a/libserial_port.so" target-dir="libs/x86"/>
         <source-file src="src/android/libs/rbLibs/jniLibs/armeabi-v7a/libmodule_manager.so" target-dir="libs/x86_64"/>
         <source-file src="src/android/libs/rbLibs/jniLibs/armeabi-v7a/libserial_port.so" target-dir="libs/x86_64"/>
-        <resource-file src="src/audio/barcodebeep.ogg" target="res/raw/barcodebeep.ogg" />
-        <resource-file src="src/audio/serror.ogg" target="res/raw/serror.ogg" />
+        <resource-file src="src/audio/barcodebeep.ogg" target-dir="src/com/pactera/hifm/uhf" />
+        <resource-file src="src/audio/serror.ogg" target-dir="src/com/pactera/hifm/uhf" />
         <framework src="com.android.support:support-v4:18+"/>
     </platform>
 </plugin>
