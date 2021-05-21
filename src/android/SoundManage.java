@@ -25,7 +25,7 @@ public class SoundManage {
         if(type== SoundType.SUCCESS)
         {
             if(successID==-1) {
-                successID = soundPool.load(c, barcodebeep, 1);
+                successID = soundPool.load(c, R.barcodebeep, 1);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -43,7 +43,7 @@ public class SoundManage {
                 //第四个参数为优先级，由于只有这一个声音，因此优先级在这里并不重要
                 //第五个参数为是否循环播放，0为不循环，-1为循环
                 //最后一个参数为播放比率，从0.5到2，一般为1，表示正常播放。
-                failureID =soundPool.load(c,serror,1);
+                failureID =soundPool.load(c,R.serror,1);
             }
             id=failureID;
         }
