@@ -82,9 +82,8 @@ public class UhfInv extends CordovaPlugin {
       if ("C66".equals(android.os.Build.MODEL) || "P80".equals(android.os.Build.MODEL)){
 
         if ("startBarcodeDataReceiver".equals(action)) {
-
-          startBarcodeDataReceiver();
-          return true;
+            startBarcodeDataReceiver();
+            return true;
         }
 
         if (action.contains("Barcode2DWithSoft")) {
@@ -177,14 +176,20 @@ public class UhfInv extends CordovaPlugin {
 
   private void startBarcodeDataReceiver() {
     try {
-      if (this.receiver == null) {
-        this.receiver = new BarcodeDataReceiver(cordova, cordovaCallbackContext);
-      }
-      webView.getContext().registerReceiver(receiver, new IntentFilter("com.scanner.broadcast"));
-      PluginResult pluginResult = new PluginResult(Status.OK, "Receiver started");
-      pluginResult.setKeepCallback(true);
-      this.cordovaCallbackContext.sendPluginResult(pluginResult);
-
+        if(receiver == null){
+          this.receiver = new BarcodeDataReceiver(cordova, cordovaCallbackContext);
+          webView.getContext().registerReceiver(receiver, new IntentFilter("com.scanner.broadcast"));
+          PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+          pluginResult.setKeepCallback(true);
+          this.cordovaCallbackContext.sendPluginResult(pluginResult);
+        }else{
+          webView.getContext().unregisterReceiver(receiver);
+          this.receiver = new BarcodeDataReceiver(cordova, cordovaCallbackContext);
+          webView.getContext().registerReceiver(receiver, new IntentFilter("com.scanner.broadcast"));
+          PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+          pluginResult.setKeepCallback(true);
+          this.cordovaCallbackContext.sendPluginResult(pluginResult);
+        }
     } catch (Exception e) {
       callback(Status.ERROR, e.getMessage());
     }
