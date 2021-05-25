@@ -5,10 +5,6 @@ import android.media.SoundPool;
 
 import com.zag.chainway.R;
 
-
-/**
- * Created by zhoupin on 2016/6/3 0003.
- */
 public class SoundManage {
 
     private  static int successID=-1;
@@ -38,11 +34,6 @@ public class SoundManage {
         {
             if(failureID==-1)
             {
-                //第一个参数为id
-                //第二个和第三个参数为左右声道的音量控制
-                //第四个参数为优先级，由于只有这一个声音，因此优先级在这里并不重要
-                //第五个参数为是否循环播放，0为不循环，-1为循环
-                //最后一个参数为播放比率，从0.5到2，一般为1，表示正常播放。
                 failureID =soundPool.load(c,R.raw.serror,1);
             }
             id=failureID;
@@ -61,12 +52,8 @@ public class SoundManage {
         return soundPool;
     }
 
-
-
-
     public  enum SoundType{
        FAILURE,SUCCESS
     }
-
 
 }
